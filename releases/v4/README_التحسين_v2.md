@@ -54,10 +54,16 @@
 | `07_build_bm25_and_stems.py` | يبني BM25 (سطحي + جذري) وخرائط المفردات/الجذور من قاعدة البيانات — يُشغَّل مرة واحدة |
 | `08_hybrid_search_v2.py` | محرك البحث المحسَّن (5 قنوات + RRF) — نفّذه من سطر الأوامر: `python3 08_hybrid_search_v2.py "استعلامك"` |
 | `09_search_api_v2.py` | واجهة Flask API محدّثة (منفذ 8009) |
-| `bm25_surface.pkl`, `bm25_stem.pkl`, `bm25_passage_ids.pkl` | فهارس BM25 جاهزة (لا حاجة لإعادة البناء) |
+| `bm25_surface.pkl.part_00/01/02` | فهرس BM25 السطحي — **مقسّم لثلاثة أجزاء** لتجاوز حد رفع الملف الواحد (نفس أسلوب `releases/v3`) |
+| `bm25_stem.pkl`, `bm25_passage_ids.pkl` | فهرس BM25 الجذري وقائمة معرفات الفقرات — جاهزة، لا تحتاج تجميعاً |
 | `vocab_surface.pkl`, `root_to_words.pkl` | خرائط المفردات والجذور لدعم fuzzy والتوسّع الصرفي |
 
-**التشغيل:** ضع هذه الملفات في نفس مجلد ملفات v3 الأصلية (قاعدة البيانات،
+### إعادة تجميع `bm25_surface.pkl`
+```bash
+cat bm25_surface.pkl.part_00 bm25_surface.pkl.part_01 bm25_surface.pkl.part_02 > bm25_surface.pkl
+```
+
+**التشغيل:** ضع هذه الملفات (بعد إعادة التجميع) في نفس مجلد ملفات v3 الأصلية (قاعدة البيانات،
 `fasttext_balagha.model` وملفاته، `passage_vectors_lsa.npy`, `tfidf_vectorizer.pkl`,
 `svd_model.pkl`)، ثم:
 ```bash
